@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nosso Sushi & Thai | Montijo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Lato', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+              display: ['Cinzel', 'serif'],
+              script: ['Great Vibes', 'cursive'],
+            },
+            colors: {
+              gold: {
+                400: '#d4af37',
+                500: '#c59d5f',
+                600: '#b48a48',
+                700: '#8e6c36',
+              },
+              brand: {
+                red: '#C41E3A', // Deep red for the "&"
+              }
+            },
+            animation: {
+              'gradient-x': 'gradientX 3s ease-in-out infinite',
+              'shimmer': 'shimmer 1.5s infinite',
+            },
+            keyframes: {
+              gradientX: {
+                '0%, 100%': { 'background-position': '0% 50%' },
+                '50%': { 'background-position': '100% 50%' },
+              },
+              shimmer: {
+                '100%': { transform: 'translateX(200%) skewX(-12deg)' }
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <script type="module">
+        // Import map removed as it conflicts with Vite bundling
+    </script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-stone-50 text-stone-800 antialiased overflow-x-hidden">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
