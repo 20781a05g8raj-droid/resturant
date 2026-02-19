@@ -12,15 +12,18 @@ interface CartContextType {
   subtotal: number;
   tax: number;
   total: number;
+  isCartOpen: boolean;
+  setIsCartOpen: (isOpen: boolean) => void;
+  toggleCart: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({ 
-    name: '', 
-    table: '', 
+  const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
+    name: '',
+    table: '',
     type: 'Dine In',
     phone: '',
     address: ''
@@ -59,6 +62,9 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const tax = subtotal * 0.10;
   const total = subtotal + tax;
 
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const toggleCart = () => setIsCartOpen(prev => !prev);
+
   return (
     <CartContext.Provider value={{
       cart,
@@ -70,7 +76,10 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setCustomerInfo,
       subtotal,
       tax,
-      total
+      total,
+      isCartOpen,
+      setIsCartOpen,
+      toggleCart
     }}>
       {children}
     </CartContext.Provider>

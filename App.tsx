@@ -3,6 +3,8 @@ import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { CartProvider } from './context/CartContext';
+import { CartDrawer } from './components/CartDrawer';
+
 
 // Pages
 import { Home } from './pages/Home';
@@ -27,8 +29,9 @@ const App: React.FC = () => {
       <HashRouter>
         <div className="bg-stone-50 min-h-screen flex flex-col">
           <ScrollToTop />
+          <CartDrawer />
           <Navbar />
-          
+
           <main className="flex-grow">
             <Routes>
               <Route path="/" element={<Home />} />

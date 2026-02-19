@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone } from 'lucide-react';
+import { Menu, X, Phone, ShoppingBag } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { toggleCart, cart } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,10 +31,9 @@ export const Navbar: React.FC = () => {
   ];
 
   return (
-    <nav 
-      className={`fixed w-full z-50 transition-all duration-500 ${
-        isScrolled || location.pathname !== '/' ? 'bg-stone-900/95 shadow-xl py-2 backdrop-blur-sm' : 'bg-transparent py-4'
-      }`}
+    <nav
+      className={`fixed w-full z-50 transition-all duration-500 ${isScrolled || location.pathname !== '/' ? 'bg-stone-900/95 shadow-xl py-2 backdrop-blur-sm' : 'bg-transparent py-4'
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
@@ -54,24 +55,47 @@ export const Navbar: React.FC = () => {
               <Link
                 key={link.name}
                 to={link.path}
-                className={`font-sans text-sm uppercase tracking-widest transition-colors font-semibold ${
-                   location.pathname === link.path ? 'text-gold-500' : 'text-white hover:text-gold-500'
-                }`}
+                className={`font-sans text-sm uppercase tracking-widest transition-colors font-semibold ${location.pathname === link.path ? 'text-gold-500' : 'text-white hover:text-gold-500'
+                  }`}
               >
                 {link.name}
               </Link>
             ))}
+            {/* Cart Button (Desktop) */}
+            <button
+              onClick={toggleCart}
+              className="relative text-white hover:text-gold-500 transition-colors p-2 ml-4"
+            >
+              <ShoppingBag size={24} />
+              {cart.length > 0 && (
+                <span className="absolute -top-1 -right-1 bg-brand-red text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                  {cart.length}
+                </span>
+              )}
+            </button>
+
             <div className="flex items-center text-white ml-4 border-l border-stone-600 pl-6">
               <Phone size={16} className="text-gold-500 mr-2" />
               <div className="flex flex-col">
-                 <span className="text-xs text-stone-400 uppercase tracking-wider">Reservations</span>
-                 <span className="text-sm font-bold tracking-wide">+351 123 456 789</span>
+                <span className="text-xs text-stone-400 uppercase tracking-wider">Reservations</span>
+                <span className="text-sm font-bold tracking-wide">+351 123 456 789</span>
               </div>
             </div>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-2">
+            <button
+              onClick={toggleCart}
+              className="relative text-white hover:text-gold-500 transition-colors p-2"
+            >
+              <ShoppingBag size={24} />
+              {cart.length > 0 && (
+                <span className="absolute -top-1 -right-1 bg-brand-red text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                  {cart.length}
+                </span>
+              )}
+            </button>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="text-white hover:text-gold-500 transition-colors p-2"
@@ -83,19 +107,17 @@ export const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile Menu Overlay */}
-      <div 
-        className={`md:hidden absolute top-full left-0 w-full bg-stone-900 shadow-2xl transition-all duration-300 overflow-hidden ${
-          isMobileMenuOpen ? 'max-h-[30rem] opacity-100' : 'max-h-0 opacity-0'
-        }`}
+      <div
+        className={`md:hidden absolute top-full left-0 w-full bg-stone-900 shadow-2xl transition-all duration-300 overflow-hidden ${isMobileMenuOpen ? 'max-h-[30rem] opacity-100' : 'max-h-0 opacity-0'
+          }`}
       >
         <div className="px-4 py-8 space-y-6 flex flex-col items-center bg-stone-900 border-t border-stone-800">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               to={link.path}
-              className={`font-display text-xl uppercase tracking-widest py-2 ${
-                  location.pathname === link.path ? 'text-gold-500' : 'text-white hover:text-gold-500'
-              }`}
+              className={`font-display text-xl uppercase tracking-widest py-2 ${location.pathname === link.path ? 'text-gold-500' : 'text-white hover:text-gold-500'
+                }`}
             >
               {link.name}
             </Link>
