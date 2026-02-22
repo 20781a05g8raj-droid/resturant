@@ -3,6 +3,7 @@ import { useCart } from '../context/CartContext';
 import { X, ShoppingBag, Trash2, Minus, Plus, ChefHat, CheckCircle2, Phone, MapPin, Package, Bike, Utensils } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from './Button';
+import { createOrder } from '../lib/api/ordersApi';
 
 export const CartDrawer: React.FC = () => {
     const {
@@ -22,7 +23,7 @@ export const CartDrawer: React.FC = () => {
     const [orderStatus, setOrderStatus] = useState<'idle' | 'processing' | 'success'>('idle');
     const [formErrors, setFormErrors] = useState<{ [key: string]: boolean }>({});
 
-    const handlePlaceOrder = () => {
+    const handlePlaceOrder = async () => {
         // Validation
         const errors: { [key: string]: boolean } = {};
         if (!customerInfo.name) errors.name = true;
@@ -42,16 +43,30 @@ export const CartDrawer: React.FC = () => {
 
         setOrderStatus('processing');
 
-        // Simulate API call
+        try {
+            const orderType = customerInfo.type === 'Takeaway' ? 'Take Away' : customerInfo.type as any;
+            await createOrder({
+                customer_name: customerInfo.name,
+                customer_phone: customerInfo.phone || '',
+                customer_address: customerInfo.address || null,
+                order_type: orderType,
+                items: cart.map(item => ({ id: item.id, name: item.name, price: item.price, quantity: item.quantity, image: item.image })),
+                subtotal,
+                tax,
+                total,
+                status: 'new',
+            });
+        } catch (err) {
+            console.error('Order creation error:', err);
+        }
+
+        setOrderStatus('success');
         setTimeout(() => {
-            setOrderStatus('success');
-            setTimeout(() => {
-                clearCart();
-                setOrderStatus('idle');
-                setCustomerInfo({ ...customerInfo, name: '', phone: '', address: '', table: '' }); // Reset fields but keep type
-                toggleCart(); // Close drawer after success
-            }, 3000);
-        }, 1500);
+            clearCart();
+            setOrderStatus('idle');
+            setCustomerInfo({ ...customerInfo, name: '', phone: '', address: '', table: '' });
+            toggleCart();
+        }, 3000);
     };
 
     const getOrderTypeIcon = () => {
@@ -104,8 +119,8 @@ export const CartDrawer: React.FC = () => {
                                             key={type}
                                             onClick={() => setCustomerInfo({ ...customerInfo, type: type as any })}
                                             className={`text-[10px] sm:text-xs font-bold py-2 rounded-md transition-all ${customerInfo.type === type
-                                                    ? 'bg-white text-stone-900 shadow-sm'
-                                                    : 'text-stone-500 hover:text-stone-700'
+                                                ? 'bg-white text-stone-900 shadow-sm'
+                                                : 'text-stone-500 hover:text-stone-700'
                                                 }`}
                                         >
                                             {type}

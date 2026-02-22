@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from './Button';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { LuxuryBackground } from './SvgAnimations';
 
 const heroImages = [
   "https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=1925&auto=format&fit=crop", // Sushi Dark
@@ -35,31 +36,31 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <section 
-      id="home" 
+    <section
+      id="home"
       className="relative h-screen flex items-center justify-center overflow-hidden bg-stone-900"
     >
+      <LuxuryBackground />
       {/* Background Slider */}
       {heroImages.map((img, index) => (
-        <div 
+        <div
           key={index}
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-            index === currentIndex ? 'opacity-100' : 'opacity-0'
-          }`}
+          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentIndex ? 'opacity-100' : 'opacity-0'
+            }`}
         >
-           {/* Image with slight scale to prevent white edges during transition */}
-           <div 
-             className="absolute inset-0 bg-cover bg-center transform scale-[1.02]"
-             style={{ backgroundImage: `url("${img}")` }}
-           />
-           {/* Overlays for Text Readability */}
-           <div className="absolute inset-0 bg-black/60"></div>
-           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30"></div>
+          {/* Image with slight scale to prevent white edges during transition */}
+          <div
+            className="absolute inset-0 bg-cover bg-center transform scale-[1.02]"
+            style={{ backgroundImage: `url("${img}")` }}
+          />
+          {/* Overlays for Text Readability */}
+          <div className="absolute inset-0 bg-black/60"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30"></div>
         </div>
       ))}
 
       {/* Manual Navigation Controls (Arrows) - Hidden on Mobile */}
-      <button 
+      <button
         onClick={prevSlide}
         className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 text-white/30 hover:text-white hover:bg-black/20 p-3 rounded-full transition-all duration-300 hidden md:block backdrop-blur-sm"
         aria-label="Previous Slide"
@@ -67,7 +68,7 @@ export const Hero: React.FC = () => {
         <ChevronLeft size={40} />
       </button>
 
-      <button 
+      <button
         onClick={nextSlide}
         className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 text-white/30 hover:text-white hover:bg-black/20 p-3 rounded-full transition-all duration-300 hidden md:block backdrop-blur-sm"
         aria-label="Next Slide"
@@ -81,11 +82,10 @@ export const Hero: React.FC = () => {
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
-            className={`h-2 rounded-full transition-all duration-500 ${
-              index === currentIndex 
-                ? 'bg-gold-500 w-8' 
+            className={`h-2 rounded-full transition-all duration-500 ${index === currentIndex
+                ? 'bg-gold-500 w-8'
                 : 'bg-white/50 w-2 hover:bg-white'
-            }`}
+              }`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
@@ -110,13 +110,13 @@ export const Hero: React.FC = () => {
               <span className="font-display text-4xl md:text-6xl lg:text-7xl text-white tracking-wider drop-shadow-xl">THAI</span>
             </div>
           </div>
-          
+
           <p className="text-xl md:text-2xl font-serif text-stone-300 italic tracking-wider">
-             Montijo, Portugal
+            Montijo, Portugal
           </p>
         </motion.div>
-        
-        <motion.p 
+
+        <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
@@ -124,23 +124,23 @@ export const Hero: React.FC = () => {
         >
           Authentic Flavors • Modern Fusion • Premium Quality
         </motion.p>
-        
-        <motion.div 
+
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
           className="flex flex-row justify-center items-center gap-3 w-full px-2 sm:w-auto sm:gap-6 sm:px-0"
         >
-          <Button 
-            onClick={() => scrollTo('menu-highlights')} 
-            variant="primary" 
+          <Button
+            onClick={() => scrollTo('menu-highlights')}
+            variant="primary"
             className="border-2 border-gold-500 flex-1 sm:flex-none !px-4 sm:!px-8 text-xs sm:text-sm whitespace-nowrap"
           >
             Explore Menu
           </Button>
-          <Button 
-            onClick={() => scrollTo('reservations')} 
-            variant="outline" 
+          <Button
+            onClick={() => scrollTo('reservations')}
+            variant="outline"
             className="border-stone-300 text-stone-200 hover:bg-white hover:text-black flex-1 sm:flex-none !px-4 sm:!px-8 text-xs sm:text-sm whitespace-nowrap"
           >
             Book a Table

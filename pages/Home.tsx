@@ -5,6 +5,7 @@ import { MenuHighlights } from '../components/MenuHighlights';
 import { HomeAbout } from '../components/HomeAbout';
 import { HomeReviews } from '../components/HomeReviews';
 import { HomeReservation } from '../components/HomeReservation';
+import { AnimatedDivider } from '../components/SvgAnimations';
 import { motion } from 'framer-motion';
 
 export const Home: React.FC = () => {
@@ -17,6 +18,9 @@ export const Home: React.FC = () => {
       className="bg-[#faf7f2]"
     >
       <Hero />
+      <div className="bg-stone-900">
+        <AnimatedDivider />
+      </div>
       <Features />
       <MenuHighlights />
       <HomeAbout />
